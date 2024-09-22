@@ -17,7 +17,7 @@ const TextInput = ({ onResponse }) => {
   };
 
   return (
-    <div>
+    <div className='form-container'>
       <input
         type="text"
         placeholder="API Input"

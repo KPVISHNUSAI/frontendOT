@@ -1,25 +1,30 @@
 import React from 'react';
+import '../App.css'
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
+const animatedComponents = makeAnimated();
 
 const Dropdown = ({ options, selectedOptions, setSelectedOptions }) => {
-  const handleChange = (event) => {
-    const { value } = event.target;
-    if (selectedOptions.includes(value)) {
-      setSelectedOptions(selectedOptions.filter((option) => option !== value));
-    } else {
-      setSelectedOptions([...selectedOptions, value]);
-    }
+  const handleChange = (selected) => {
+    const values = selected ? selected.map((option) => option.value) : [];
+    setSelectedOptions(values);
   };
 
+  const formattedOptions = options.map((option) => ({
+    value: option,
+    label: option,
+  }));
+
   return (
-    <div>
-      <select multiple onChange={handleChange} value={selectedOptions}>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Select
+      components={animatedComponents}
+      options={formattedOptions}
+      isMulti
+      onChange={handleChange}
+      value={formattedOptions.filter(option => selectedOptions.includes(option.value))}
+      className='Select'
+    />
   );
 };
 
